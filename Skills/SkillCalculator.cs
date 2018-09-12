@@ -39,7 +39,7 @@ namespace Moserware.Skills
                                                                                   IEnumerable
                                                                                       <IDictionary<TPlayer, Rating>>
                                                                                       teams,
-                                                                                  params int[] teamRanks);
+                                                                                  IList<int> teamRanks);
 
         /// <summary>
         /// Calculates the match quality as the likelihood of all teams drawing.

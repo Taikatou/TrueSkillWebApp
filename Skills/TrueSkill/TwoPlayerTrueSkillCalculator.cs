@@ -23,7 +23,7 @@ namespace Moserware.Skills.TrueSkill
         public override IDictionary<TPlayer, Rating> CalculateNewRatings<TPlayer>(GameInfo gameInfo,
                                                                                   IEnumerable
                                                                                       <IDictionary<TPlayer, Rating>>
-                                                                                      teams, params int[] teamRanks)
+                                                                                      teams, IList<int> teamRanks)
         {
             // Basic argument checking
             Guard.ArgumentNotNull(gameInfo, "gameInfo");

@@ -1,6 +1,7 @@
 ﻿using Moserware.Numerics;
 using Moserware.Skills.FactorGraphs;
 using Moserware.Skills.TrueSkill.Factors;
+using System.Collections.Generic;
 
 namespace Moserware.Skills.TrueSkill.Layers
 {
@@ -9,9 +10,9 @@ namespace Moserware.Skills.TrueSkill.Layers
             <TPlayer, Variable<GaussianDistribution>, GaussianFactor, DefaultVariable<GaussianDistribution>>
     {
         private readonly double _Epsilon;
-        private readonly int[] _TeamRanks;
+        private readonly IList<int> _TeamRanks;
 
-        public TeamDifferencesComparisonLayer(TrueSkillFactorGraph<TPlayer> parentGraph, int[] teamRanks)
+        public TeamDifferencesComparisonLayer(TrueSkillFactorGraph<TPlayer> parentGraph, IList<int> teamRanks)
             : base(parentGraph)
         {
             _TeamRanks = teamRanks;

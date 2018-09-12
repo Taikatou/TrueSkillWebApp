@@ -31,7 +31,7 @@ namespace UnitTests.Elo
                         .AddPlayer(player4, gameInfo.DefaultRating);
 
             var teams = Teams.Concat(team1, team2);
-            var newRatingsWinLose = calculator.CalculateNewRatings(gameInfo, teams, 1, 2);
+            var newRatingsWinLose = calculator.CalculateNewRatings(gameInfo, teams, new int[] { 1, 2 });
 
             // TODO: Verify?
             AssertRating(37, newRatingsWinLose[player1]);

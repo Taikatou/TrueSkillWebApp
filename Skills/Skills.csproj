@@ -63,8 +63,10 @@
     <Compile Include="Elo\FideKFactor.cs" />
     <Compile Include="Elo\GaussianEloCalculator.cs" />
     <Compile Include="Elo\KFactor.cs" />
+    <Compile Include="IRatable.cs" />
     <Compile Include="Numerics\Range.cs" />
     <Compile Include="PlayersRange.cs" />
+    <Compile Include="TeamPlayer.cs" />
     <Compile Include="TeamsRange.cs" />
     <Compile Include="TrueSkill\DrawMargin.cs" />
     <Compile Include="FactorGraphs\FactorGraph.cs" />

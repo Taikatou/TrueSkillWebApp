@@ -14,7 +14,7 @@ namespace Moserware.Skills
         /// <typeparam name="T">The types of items to sort.</typeparam>
         /// <param name="items">The items to sort according to the order specified by <paramref name="ranks"/>.</param>
         /// <param name="ranks">The ranks for each item where 1 is first place.</param>
-        public static void Sort<T>(ref IEnumerable<T> teams, ref int[] teamRanks)
+        public static void Sort<T>(ref IEnumerable<T> teams, ref IList<int> teamRanks)
         {
             Guard.ArgumentNotNull(teams, "teams");
             Guard.ArgumentNotNull(teamRanks, "teamRanks");
@@ -55,8 +55,8 @@ namespace Moserware.Skills
             }
 
             // Now we need a place for our results...
-            var sortedItems = new T[teamRanks.Length];
-            var sortedRanks = new int[teamRanks.Length];
+            var sortedItems = new T[teamRanks.Count()];
+            var sortedRanks = new int[teamRanks.Count()];
 
             // where are we in the result?
             int currentIndex = 0;

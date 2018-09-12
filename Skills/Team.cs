@@ -8,13 +8,19 @@ namespace Moserware.Skills
     /// </summary>
     public class Team<TPlayer>
     {
-        private readonly Dictionary<TPlayer, Rating> _PlayerRatings = new Dictionary<TPlayer, Rating>();
+        public int Id { get; set; }
+
+        ICollection<TeamPlayer<TPlayer>> TeamPlayers { get; set; }
 
         /// <summary>
         /// Constructs a new team.
         /// </summary>
         public Team()
         {
+            if (TeamPlayers == null)
+            {
+                TeamPlayers = new List<TeamPlayer<TPlayer>>();
+            }
         }
 
         /// <summary>
@@ -22,7 +28,7 @@ namespace Moserware.Skills
         /// </summary>
         /// <param name="player">The player to add.</param>
         /// <param name="rating">The rating of the <paramref name="player"/>.</param>
-        public Team(TPlayer player, Rating rating)
+        public Team(TPlayer player, Rating rating) : this()
         {
             AddPlayer(player, rating);
         }
@@ -35,8 +41,17 @@ namespace Moserware.Skills
         /// <returns>The instance of the team (for chaining convenience).</returns>
         public Team<TPlayer> AddPlayer(TPlayer player, Rating rating)
         {
-            _PlayerRatings[player] = rating;
+            TeamPlayers.Add(new TeamPlayer<TPlayer> { Player = player, Rating = rating });
             return this;
+        }
+
+        public bool AddPlayers(ICollection<TeamPlayer<TPlayer>> players)
+        {
+            foreach(TeamPlayer<TPlayer> p in players)
+            {
+                TeamPlayers.Add(p);
+            }
+            return true;
         }
 
         /// <summary>
@@ -45,7 +60,12 @@ namespace Moserware.Skills
         /// <returns>The <see cref="Team"/> as a simple dictionary.</returns>
         public IDictionary<TPlayer, Rating> AsDictionary()
         {
-            return _PlayerRatings;
+            Dictionary<TPlayer, Rating> PlayerRatings = new Dictionary<TPlayer, Rating>();
+            foreach (TeamPlayer<TPlayer> p in TeamPlayers)
+            {
+                PlayerRatings.Add(p.Player, p.Rating);
+            }
+            return PlayerRatings;
         }
     }
 

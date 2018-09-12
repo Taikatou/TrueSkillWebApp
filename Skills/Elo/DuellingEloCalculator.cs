@@ -14,7 +14,7 @@ namespace Moserware.Skills.Elo
             _TwoPlayerEloCalc = twoPlayerEloCalculator;
         }
 
-        public override IDictionary<TPlayer, Rating> CalculateNewRatings<TPlayer>(GameInfo gameInfo, IEnumerable<IDictionary<TPlayer, Rating>> teams, params int[] teamRanks)
+        public override IDictionary<TPlayer, Rating> CalculateNewRatings<TPlayer>(GameInfo gameInfo, IEnumerable<IDictionary<TPlayer, Rating>> teams, IList<int> teamRanks)
         {
             // On page 6 of the TrueSkill paper, the authors write:
             // "When we had to process a team game or a game with more than two teams we used

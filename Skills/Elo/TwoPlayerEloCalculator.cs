@@ -14,7 +14,7 @@ namespace Moserware.Skills.Elo
             _KFactor = kFactor;
         }
 
-        public override IDictionary<TPlayer, Rating> CalculateNewRatings<TPlayer>(GameInfo gameInfo, IEnumerable<IDictionary<TPlayer, Rating>> teams, params int[] teamRanks)
+        public override IDictionary<TPlayer, Rating> CalculateNewRatings<TPlayer>(GameInfo gameInfo, IEnumerable<IDictionary<TPlayer, Rating>> teams, IList<int> teamRanks)
         {
             ValidateTeamCountAndPlayersCountPerTeam(teams);
             RankSorter.Sort(ref teams, ref teamRanks);

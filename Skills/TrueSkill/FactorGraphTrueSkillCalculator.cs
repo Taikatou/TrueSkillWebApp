@@ -16,8 +16,8 @@ namespace Moserware.Skills.TrueSkill
         }
 
         public override IDictionary<TPlayer, Rating> CalculateNewRatings<TPlayer>(GameInfo gameInfo,
-                                                                                  IEnumerable<IDictionary<TPlayer, Rating>> teams, 
-                                                                                  params int[] teamRanks)
+                                                                                  IEnumerable<IDictionary<TPlayer, Rating>> teams,
+                                                                                  IList<int> teamRanks)
         {
             Guard.ArgumentNotNull(gameInfo, "gameInfo");
             ValidateTeamCountAndPlayersCountPerTeam(teams);

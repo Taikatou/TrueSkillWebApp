@@ -13,7 +13,7 @@ namespace Moserware.Skills.TrueSkill
         private readonly List<FactorGraphLayerBase<GaussianDistribution>> _Layers;
         private readonly PlayerPriorValuesToSkillsLayer<TPlayer> _PriorLayer;
 
-        public TrueSkillFactorGraph(GameInfo gameInfo, IEnumerable<IDictionary<TPlayer, Rating>> teams, int[] teamRanks)
+        public TrueSkillFactorGraph(GameInfo gameInfo, IEnumerable<IDictionary<TPlayer, Rating>> teams, IList<int> teamRanks)
         {
             _PriorLayer = new PlayerPriorValuesToSkillsLayer<TPlayer>(this, teams);
             GameInfo = gameInfo;

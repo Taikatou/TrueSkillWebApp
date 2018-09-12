@@ -8,16 +8,21 @@ namespace Moserware.Skills
     /// </summary>
     public class Rating
     {
+        public int Id { get; set; }
         private const int ConservativeStandardDeviationMultiplier = 3;
         private readonly double _ConservativeStandardDeviationMultiplier;
-        private readonly double _Mean;
-        private readonly double _StandardDeviation;
 
         /// <summary>
         /// Constructs a rating.
         /// </summary>
         /// <param name="mean">The statistical mean value of the rating (also known as μ).</param>
         /// <param name="standardDeviation">The standard deviation of the rating (also known as σ).</param>        
+        
+        public Rating()
+        {
+            _ConservativeStandardDeviationMultiplier = ConservativeStandardDeviationMultiplier;
+        }
+
         public Rating(double mean, double standardDeviation)
             : this(mean, standardDeviation, ConservativeStandardDeviationMultiplier)
         {
@@ -31,33 +36,27 @@ namespace Moserware.Skills
         /// <param name="conservativeStandardDeviationMultiplier">The number of <paramref name="standardDeviation"/>s to subtract from the <paramref name="mean"/> to achieve a conservative rating.</param>
         public Rating(double mean, double standardDeviation, double conservativeStandardDeviationMultiplier)
         {
-            _Mean = mean;
-            _StandardDeviation = standardDeviation;
+            Mean = mean;
+            StandardDeviation = standardDeviation;
             _ConservativeStandardDeviationMultiplier = conservativeStandardDeviationMultiplier;
         }
 
         /// <summary>
         /// The statistical mean value of the rating (also known as μ).
         /// </summary>
-        public double Mean
-        {
-            get { return _Mean; }
-        }
+        public double Mean { get; }
 
         /// <summary>
         /// The standard deviation (the spread) of the rating. This is also known as σ.
         /// </summary>
-        public double StandardDeviation
-        {
-            get { return _StandardDeviation; }
-        }
+        public double StandardDeviation { get; }
 
         /// <summary>
         /// A conservative estimate of skill based on the mean and standard deviation.
         /// </summary>
         public double ConservativeRating
         {
-            get { return _Mean - _ConservativeStandardDeviationMultiplier*_StandardDeviation; }
+            get { return Mean - _ConservativeStandardDeviationMultiplier*StandardDeviation; }
         }
 
         public static Rating GetPartialUpdate(Rating prior, Rating fullPosterior, double updatePercentage)

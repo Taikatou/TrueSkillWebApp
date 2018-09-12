@@ -21,8 +21,8 @@ namespace Moserware.Skills
         /// <returns>All the players and their new ratings.</returns>
         public static IDictionary<TPlayer, Rating> CalculateNewRatings<TPlayer>(GameInfo gameInfo,
                                                                                 IEnumerable
-                                                                                    <IDictionary<TPlayer, Rating>> teams,
-                                                                                params int[] teamRanks)
+                                                                                <IDictionary<TPlayer, Rating>> teams,
+                                                                                IList<int> teamRanks)
         {
             // Just punt the work to the full implementation
             return _Calculator.CalculateNewRatings(gameInfo, teams, teamRanks);
