@@ -13,5 +13,7 @@ namespace SkillsWebApp.Data
         public DbSet<PlayerInt> Players { get; set; }
 
         public DbSet<Team> Teams { get; set; }
+
+        public DbSet<Rating> Rating { get; set; }
     }
 }

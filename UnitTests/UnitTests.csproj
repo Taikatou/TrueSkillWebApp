@@ -91,12 +91,6 @@
     <Compile Include="TrueSkill\TwoTeamTrueSkillCalculatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Skills\Skills.csproj">
-      <Project>{15AD1345-984C-48ED-AF9A-2EAB44E5AA2B}</Project>
-      <Name>Skills</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="README.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +107,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Skills\Skills.csproj">
+      <Project>{15ad1345-984c-48ed-af9a-2eab44e5aa2b}</Project>
+      <Name>Skills</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

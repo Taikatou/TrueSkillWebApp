@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Moserware.Skills;
 using SkillsWebApp.Data;
 
 namespace SkillsWebApp.Controllers
@@ -23,6 +24,25 @@ namespace SkillsWebApp.Controllers
         public IEnumerable<PlayerInt> GetPlayers()
         {
             return _context.Players;
+        }
+
+        // GET: api/Player/5
+        [HttpGet("rating/{id}")]
+        public async Task<IActionResult> GetPlayerRating([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var playerInt = await _context.Players.FindAsync(id);
+
+            if (playerInt == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(playerInt.Rating);
         }
 
         // GET: api/Player/5
@@ -88,6 +108,7 @@ namespace SkillsWebApp.Controllers
                 return BadRequest(ModelState);
             }
 
+            playerInt.Rating = GameInfo.DefaultGameInfo.DefaultRating;
             _context.Players.Add(playerInt);
             await _context.SaveChangesAsync();
 

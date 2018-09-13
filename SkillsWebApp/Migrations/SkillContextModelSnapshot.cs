@@ -47,6 +47,8 @@ namespace SkillsWebApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("DisplayName");
+
                     b.Property<double>("PartialPlayPercentage");
 
                     b.Property<double>("PartialUpdatePercentage");
