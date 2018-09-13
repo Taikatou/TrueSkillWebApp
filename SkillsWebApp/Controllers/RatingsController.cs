@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Moserware.Skills;
 using SkillsWebApp.Data;
 
 namespace SkillsWebApp.Controllers
@@ -21,47 +20,47 @@ namespace SkillsWebApp.Controllers
             _context = context;
         }
 
-        // GET: api/Ratings
+        // GET: api/RatingDBs
         [HttpGet]
-        public IEnumerable<Rating> GetRating()
+        public IEnumerable<RatingDB> GetRating()
         {
             return _context.Rating;
         }
 
-        // GET: api/Ratings/5
+        // GET: api/RatingDBs/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetRating([FromRoute] int id)
+        public async Task<IActionResult> GetRatingDB([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var rating = await _context.Rating.FindAsync(id);
+            var ratingDB = await _context.Rating.FindAsync(id);
 
-            if (rating == null)
+            if (ratingDB == null)
             {
                 return NotFound();
             }
 
-            return Ok(rating);
+            return Ok(ratingDB);
         }
 
-        // PUT: api/Ratings/5
+        // PUT: api/RatingDBs/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRating([FromRoute] int id, [FromBody] Rating rating)
+        public async Task<IActionResult> PutRatingDB([FromRoute] int id, [FromBody] RatingDB ratingDB)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != rating.Id)
+            if (id != ratingDB.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(rating).State = EntityState.Modified;
+            _context.Entry(ratingDB).State = EntityState.Modified;
 
             try
             {
@@ -69,7 +68,7 @@ namespace SkillsWebApp.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RatingExists(id))
+                if (!RatingDBExists(id))
                 {
                     return NotFound();
                 }
@@ -82,58 +81,43 @@ namespace SkillsWebApp.Controllers
             return NoContent();
         }
 
-        // POST: api/Ratings
+        // POST: api/RatingDBs
         [HttpPost]
-        public async Task<IActionResult> PostRating([FromBody] Rating rating)
+        public async Task<IActionResult> PostRatingDB([FromBody] RatingDB ratingDB)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Rating.Add(rating);
+            _context.Rating.Add(ratingDB);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRating", new { id = rating.Id }, rating);
+            return CreatedAtAction("GetRatingDB", new { id = ratingDB.Id }, ratingDB);
         }
 
-        // POST: api/Ratings
-        [HttpPost("default")]
-        public async Task<IActionResult> PostRatingDefault()
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            Rating rating2 = GameInfo.DefaultGameInfo.DefaultRating;
-            _context.Rating.Add(rating2);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetRating", new { id = rating2.Id }, rating2);
-        }
-
-        // DELETE: api/Ratings/5
+        // DELETE: api/RatingDBs/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRating([FromRoute] int id)
+        public async Task<IActionResult> DeleteRatingDB([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var rating = await _context.Rating.FindAsync(id);
-            if (rating == null)
+            var ratingDB = await _context.Rating.FindAsync(id);
+            if (ratingDB == null)
             {
                 return NotFound();
             }
 
-            _context.Rating.Remove(rating);
+            _context.Rating.Remove(ratingDB);
             await _context.SaveChangesAsync();
 
-            return Ok(rating);
+            return Ok(ratingDB);
         }
 
-        private bool RatingExists(int id)
+        private bool RatingDBExists(int id)
         {
             return _context.Rating.Any(e => e.Id == id);
         }

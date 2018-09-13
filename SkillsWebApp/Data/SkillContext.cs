@@ -14,6 +14,6 @@ namespace SkillsWebApp.Data
 
         public DbSet<Team> Teams { get; set; }
 
-        public DbSet<Rating> Rating { get; set; }
+        public DbSet<RatingDB> Rating { get; set; }
     }
 }
