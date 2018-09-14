@@ -37,7 +37,8 @@ namespace SkillsWebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            var player = await _context.Player.FindAsync(id);
+            var player = await _context.Player.Include(e => e.Rating)
+                               .FirstOrDefaultAsync(e => e.Id == id);
 
             if (player == null)
             {
