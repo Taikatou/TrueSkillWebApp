@@ -12,6 +12,9 @@ namespace Moserware.Skills
         private const int ConservativeStandardDeviationMultiplier = 3;
         private readonly double _ConservativeStandardDeviationMultiplier;
 
+        public Player Player { get; set; }
+        public int RatingOfPlayer { get; set; }
+
         /// <summary>
         /// Constructs a rating.
         /// </summary>

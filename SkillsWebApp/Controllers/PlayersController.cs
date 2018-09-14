@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Moserware.Skills;
@@ -19,66 +21,47 @@ namespace SkillsWebApp.Controllers
             _context = context;
         }
 
-        // GET: api/Player
+        // GET: api/Players
         [HttpGet]
-        public IEnumerable<PlayerInt> GetPlayers()
+        public IEnumerable<Player> GetPlayer()
         {
-            return _context.Players;
+            return _context.Player;
         }
 
-        // GET: api/Player/5
-        [HttpGet("rating/{id}")]
-        public async Task<IActionResult> GetPlayerRating([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var playerInt = await _context.Players.FindAsync(id);
-
-            if (playerInt == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(playerInt.Rating);
-        }
-
-        // GET: api/Player/5
+        // GET: api/Players/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetPlayerInt([FromRoute] int id)
+        public async Task<IActionResult> GetPlayer([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var playerInt = await _context.Players.FindAsync(id);
+            var player = await _context.Player.FindAsync(id);
 
-            if (playerInt == null)
+            if (player == null)
             {
                 return NotFound();
             }
 
-            return Ok(playerInt);
+            return Ok(player);
         }
 
-        // PUT: api/Player/5
+        // PUT: api/Players/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPlayerInt([FromRoute] int id, [FromBody] PlayerInt playerInt)
+        public async Task<IActionResult> PutPlayer([FromRoute] int id, [FromBody] Player player)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != playerInt.Id)
+            if (id != player.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(playerInt).State = EntityState.Modified;
+            _context.Entry(player).State = EntityState.Modified;
 
             try
             {
@@ -86,7 +69,7 @@ namespace SkillsWebApp.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PlayerIntExists(id))
+                if (!PlayerExists(id))
                 {
                     return NotFound();
                 }
@@ -99,47 +82,45 @@ namespace SkillsWebApp.Controllers
             return NoContent();
         }
 
-        // POST: api/Player
+        // POST: api/Players
         [HttpPost]
-        public async Task<IActionResult> PostPlayerInt([FromBody] PlayerInt playerInt)
+        public async Task<IActionResult> PostPlayer([FromBody] Player player)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            playerInt.Rating = GameInfo.DefaultGameInfo.DefaultRating;
-            _context.Players.Add(playerInt);
-            //_context.Rating.Add(playerInt.Rating);
+            _context.Player.Add(player);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPlayerInt", new { id = playerInt.Id }, playerInt);
+            return CreatedAtAction("GetPlayer", new { id = player.Id }, player);
         }
 
-        // DELETE: api/Player/5
+        // DELETE: api/Players/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePlayerInt([FromRoute] int id)
+        public async Task<IActionResult> DeletePlayer([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var playerInt = await _context.Players.FindAsync(id);
-            if (playerInt == null)
+            var player = await _context.Player.FindAsync(id);
+            if (player == null)
             {
                 return NotFound();
             }
 
-            _context.Players.Remove(playerInt);
+            _context.Player.Remove(player);
             await _context.SaveChangesAsync();
 
-            return Ok(playerInt);
+            return Ok(player);
         }
 
-        private bool PlayerIntExists(int id)
+        private bool PlayerExists(int id)
         {
-            return _context.Players.Any(e => e.Id == id);
+            return _context.Player.Any(e => e.Id == id);
         }
     }
 }

@@ -49,6 +49,10 @@
         /// </summary>
         public T Id { get; set; }
 
+        public Rating Rating { get; set; }
+
+        public string DisplayName { get; set; }
+
         #region ISupportPartialPlay Members
 
         /// <summary>
