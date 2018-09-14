@@ -2,7 +2,7 @@
 
 namespace SkillsWebApp.Migrations
 {
-    public partial class updateplayer : Migration
+    public partial class _2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

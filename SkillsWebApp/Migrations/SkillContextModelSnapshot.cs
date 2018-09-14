@@ -19,6 +19,27 @@ namespace SkillsWebApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Moserware.Skills.Player", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DisplayName");
+
+                    b.Property<double>("PartialPlayPercentage");
+
+                    b.Property<double>("PartialUpdatePercentage");
+
+                    b.Property<int?>("RatingId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RatingId");
+
+                    b.ToTable("Player");
+                });
+
             modelBuilder.Entity("Moserware.Skills.Rating", b =>
                 {
                     b.Property<int>("Id")
@@ -45,28 +66,7 @@ namespace SkillsWebApp.Migrations
                     b.ToTable("Teams");
                 });
 
-            modelBuilder.Entity("SkillsWebApp.Data.PlayerInt", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DisplayName");
-
-                    b.Property<double>("PartialPlayPercentage");
-
-                    b.Property<double>("PartialUpdatePercentage");
-
-                    b.Property<int?>("RatingId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RatingId");
-
-                    b.ToTable("Players");
-                });
-
-            modelBuilder.Entity("SkillsWebApp.Data.PlayerInt", b =>
+            modelBuilder.Entity("Moserware.Skills.Player", b =>
                 {
                     b.HasOne("Moserware.Skills.Rating", "Rating")
                         .WithMany()

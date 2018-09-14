@@ -62,7 +62,6 @@ namespace SkillsWebApp.Controllers
             }
 
             _context.Entry(player).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -90,7 +89,7 @@ namespace SkillsWebApp.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            player.Rating = GameInfo.DefaultGameInfo.DefaultRating;
             _context.Player.Add(player);
             await _context.SaveChangesAsync();
 

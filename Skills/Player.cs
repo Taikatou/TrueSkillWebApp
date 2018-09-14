@@ -49,6 +49,8 @@
         /// </summary>
         public T Id { get; set; }
 
+        public int? RatingId { get; set; }
+
         public Rating Rating { get; set; }
 
         public string DisplayName { get; set; }

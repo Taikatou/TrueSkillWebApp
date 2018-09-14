@@ -13,9 +13,7 @@ namespace SkillsWebApp.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Player>()
-                .HasOne<Rating>(s => s.Rating)
-                .WithOne(ad => ad.Player)
-                .HasForeignKey<Rating>(ad => ad.RatingOfPlayer);
+                .HasOne(s => s.Rating);
         }
 
         public DbSet<Team> Teams { get; set; }
