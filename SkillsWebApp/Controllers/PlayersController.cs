@@ -110,6 +110,7 @@ namespace SkillsWebApp.Controllers
 
             playerInt.Rating = GameInfo.DefaultGameInfo.DefaultRating;
             _context.Players.Add(playerInt);
+            //_context.Rating.Add(playerInt.Rating);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetPlayerInt", new { id = playerInt.Id }, playerInt);

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkillsWebApp.Data;
 
 namespace SkillsWebApp.Migrations
 {
     [DbContext(typeof(SkillContext))]
-    partial class SkillContextModelSnapshot : ModelSnapshot
+    [Migration("20180914074605_dbbb")]
+    partial class dbbb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,10 +26,6 @@ namespace SkillsWebApp.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("Mean");
-
-                    b.Property<double>("StandardDeviation");
 
                     b.HasKey("Id");
 

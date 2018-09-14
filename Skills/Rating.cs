@@ -44,12 +44,12 @@ namespace Moserware.Skills
         /// <summary>
         /// The statistical mean value of the rating (also known as μ).
         /// </summary>
-        public double Mean { get; }
+        public double Mean { get; set; }
 
         /// <summary>
         /// The standard deviation (the spread) of the rating. This is also known as σ.
         /// </summary>
-        public double StandardDeviation { get; }
+        public double StandardDeviation { get; set; }
 
         /// <summary>
         /// A conservative estimate of skill based on the mean and standard deviation.
