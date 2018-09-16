@@ -3,23 +3,22 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SkillsWebApp.Migrations
 {
-    public partial class _1 : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Player",
+                name: "Rating",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DisplayName = table.Column<string>(nullable: true),
-                    PartialPlayPercentage = table.Column<double>(nullable: false),
-                    PartialUpdatePercentage = table.Column<double>(nullable: false)
+                    Mean = table.Column<double>(nullable: false),
+                    StandardDeviation = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Player", x => x.Id);
+                    table.PrimaryKey("PK_Rating", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -35,43 +34,43 @@ namespace SkillsWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rating",
+                name: "Player",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RatingOfPlayer = table.Column<int>(nullable: false),
-                    Mean = table.Column<double>(nullable: false),
-                    StandardDeviation = table.Column<double>(nullable: false)
+                    RatingId = table.Column<int>(nullable: true),
+                    DisplayName = table.Column<string>(nullable: true),
+                    PartialPlayPercentage = table.Column<double>(nullable: false),
+                    PartialUpdatePercentage = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rating", x => x.Id);
+                    table.PrimaryKey("PK_Player", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Rating_Player_RatingOfPlayer",
-                        column: x => x.RatingOfPlayer,
-                        principalTable: "Player",
+                        name: "FK_Player_Rating_RatingId",
+                        column: x => x.RatingId,
+                        principalTable: "Rating",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rating_RatingOfPlayer",
-                table: "Rating",
-                column: "RatingOfPlayer",
-                unique: true);
+                name: "IX_Player_RatingId",
+                table: "Player",
+                column: "RatingId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Rating");
+                name: "Player");
 
             migrationBuilder.DropTable(
                 name: "Teams");
 
             migrationBuilder.DropTable(
-                name: "Player");
+                name: "Rating");
         }
     }
 }

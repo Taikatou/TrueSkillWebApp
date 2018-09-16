@@ -20,6 +20,6 @@ namespace SkillsWebApp.Data
 
         public DbSet<Rating> Rating { get; set; }
 
-        public DbSet<Moserware.Skills.Player> Player { get; set; }
+        public DbSet<Player> Player { get; set; }
     }
 }
