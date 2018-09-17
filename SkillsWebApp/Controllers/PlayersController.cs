@@ -48,6 +48,26 @@ namespace SkillsWebApp.Controllers
             return Ok(player);
         }
 
+        // GET: api/Players/5
+        [HttpGet("playfab/{id}")]
+        public async Task<IActionResult> GetPlayfabPlayer([FromRoute] string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var player = await _context.Player.Include(e => e.Rating)
+                               .FirstOrDefaultAsync(e => e.PlayfabId == id);
+
+            if (player == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(player);
+        }
+
         // PUT: api/Players/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPlayer([FromRoute] int id, [FromBody] Player player)
@@ -57,9 +77,9 @@ namespace SkillsWebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != player.Id)
+            if (!PlayerExists(id))
             {
-                return BadRequest();
+                return await PostPlayer(player);
             }
 
             _context.Entry(player).State = EntityState.Modified;

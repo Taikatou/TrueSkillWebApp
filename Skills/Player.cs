@@ -92,6 +92,7 @@
     /// </summary>
     public class Player : Player<int>
     {
+        public string PlayfabId { get; set; }
         /// <summary>
         /// Constructs a player.
         /// </summary>
