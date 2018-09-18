@@ -12,8 +12,8 @@ namespace SkillsWebApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Player>()
-                .HasOne(s => s.Rating);
+            modelBuilder.Entity<Player>().HasIndex(p => p.PlayfabId).IsUnique();
+            modelBuilder.Entity<Player>().HasOne(s => s.Rating);
         }
 
         public DbSet<Team> Teams { get; set; }
