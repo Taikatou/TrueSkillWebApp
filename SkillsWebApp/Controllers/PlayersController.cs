@@ -98,23 +98,30 @@ namespace SkillsWebApp.Controllers
             {
                 return await PutPlayer(player);
             }
-
-            _context.Entry(player).State = EntityState.Modified;
-            try
+            var playerStored = await _context.Player.Include(e => e.Rating).FirstOrDefaultAsync(e => e.PlayfabId == player.PlayfabId);
+            if (player.Id == playerStored.Id)
             {
-                await _context.SaveChangesAsync();
+                _context.Entry(player).State = EntityState.Modified;
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    playerExists = PlayerExistsPlayfab(player.PlayfabId);
+                    if (playerExists)
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                playerExists = PlayerExistsPlayfab(player.PlayfabId);
-                if (playerExists)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return Ok(playerStored);
             }
 
             return NoContent();

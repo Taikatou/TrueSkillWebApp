@@ -20,7 +20,7 @@ namespace SkillsWebApp.Controllers
 
         // PUT: api/Skill/5
         [HttpPut("update")]
-        public async Task<IActionResult> PutPlayerInt([FromBody] List<ResultTeam> TeamList)
+        public async Task<IActionResult> PutPlayerInt([FromBody] TeamListModel TeamList)
         {
             if (!ModelState.IsValid)
             {
@@ -29,16 +29,15 @@ namespace SkillsWebApp.Controllers
             var gameInfo = GameInfo.DefaultGameInfo;
             List<Team> teamList = new List<Team>();
             List<int> positions = new List<int>();
-            foreach (ResultTeam team in TeamList)
+            foreach (ResultTeam team in TeamList.TeamList)
             {
                 var team1 = new Team();
 
-                foreach (int ID in team.PlayerIds)
+                foreach (string ID in team.PlayerIds)
                 {
-                    var playerInt = await _context.Player.FindAsync(ID);
                     var player = await _context.Player.Include(e => e.Rating)
-                                        .FirstOrDefaultAsync(e => e.Id == ID);
-                    team1.AddPlayer(playerInt, playerInt.Rating);
+                                        .FirstOrDefaultAsync(e => e.PlayfabId == ID);
+                    team1.AddPlayer(player, player.Rating);
                 }
                 teamList.Add(team1);
                 positions.Add(team.Place);
