@@ -148,7 +148,7 @@ namespace SkillsWebApp.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!!PlayerExistsPlayfab(player.PlayfabId))
+                if (!PlayerExistsPlayfab(player.PlayfabId))
                 {
                     return NotFound();
                 }
