@@ -16,8 +16,6 @@ namespace SkillsWebApp.Data
             modelBuilder.Entity<Player>().HasOne(s => s.Rating);
         }
 
-        public DbSet<Team> Teams { get; set; }
-
         public DbSet<Rating> Rating { get; set; }
 
         public DbSet<Player> Player { get; set; }
