@@ -11,7 +11,7 @@ namespace Moserware.Skills
     {
         public int Id { get; set; }
 
-        ICollection<TeamPlayer<TPlayer>> TeamPlayers { get; set; }
+        public List<TeamPlayer<TPlayer>> TeamPlayers { get; private set; }
 
         /// <summary>
         /// Constructs a new team.
