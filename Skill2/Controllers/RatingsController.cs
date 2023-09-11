@@ -11,9 +11,7 @@ namespace SkillsWebApp.Controllers
     [ApiController]
     public class RatingsController : ControllerBase
     {
-        public static List<Rating> Ratings = new List<Rating>();
-
-        // GET: api/Ratings
+       /* // GET: api/Ratings
         [HttpGet]
         public IEnumerable<Rating> GetRating()
         {
@@ -89,6 +87,6 @@ namespace SkillsWebApp.Controllers
         private bool RatingExists(int id)
         {
             return Ratings.Any(e => e.Id == id);
-        }
+        }*/
     }
 }
