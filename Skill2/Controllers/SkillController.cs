@@ -25,6 +25,8 @@ namespace SkillsWebApp.Controllers
         {
         }
 
+        public static int counter = 0;
+
         // PUT: api/Skill/5
         [HttpPut("update")]
         public IActionResult PutPlayerInt([FromBody] TeamListModel TeamList)
@@ -41,7 +43,20 @@ namespace SkillsWebApp.Controllers
                 {
                     if(!string.IsNullOrEmpty(ID))
                     {
-                        if (!team1.TeamPlayers.Any(p => p.Player.PlayfabId == ID))
+                        var splitName = ID.Split("_");
+                        if (splitName.Length == 2 && splitName[1] == "-1.0")
+                        {
+                            var learningPlayerId = ID.Split("?")[0] + "?team=0";
+                            var learningPlayer = PlayersController.FindOrAddPlayer(learningPlayerId);
+                            var rating = new Rating(learningPlayer.Rating.Mean, learningPlayer.Rating.StandardDeviation);
+                            var player = new Player
+                            {
+                                PlayfabId = ID,
+                                Rating = rating
+                            };
+                            team1.AddPlayer(player, player.Rating);
+                        }
+                        else if (!team1.TeamPlayers.Any(p => p.Player.PlayfabId == ID))
                         {
                             var player = PlayersController.FindOrAddPlayer(ID);
                             team1.AddPlayer(player, player.Rating);
@@ -70,23 +85,25 @@ namespace SkillsWebApp.Controllers
                 player.Rating = item.Value;
             }
 
-
-            foreach(var player in PlayersController.Players)
+            if(counter >= 50)
             {
-                var file_name = $"{player.PlayfabId}";
-                Regex rgx = new Regex("[^a-zA-Z0-9 -]");
-                file_name = rgx.Replace(file_name, "") + "_results_2.csv";
-                if (!System.IO.File.Exists(file_name))
+                foreach (var character in PlayersController.CharacterData)
                 {
-                    using (FileStream fs = System.IO.File.Create(file_name));
+                    var file_name = character.Key + "_results_2.csv";
+                    var sw = new StreamWriter(file_name);
+                    foreach(var player in character.Value)
+                    {
+                        sw.Write(player.PlayfabId + "," + player.Rating.ConservativeRating + "," + player.Rating.StandardDeviation + "," + player.Rating.Mean + "\n");
+                    }
+                    sw.Close();
                 }
-
-                StreamWriter sw = System.IO.File.AppendText(file_name);
-                sw.WriteLine(player.Rating.ConservativeRating);
-                sw.Close();
+                counter = 0;
             }
-            System.Threading.Thread.Sleep(1000);
-
+            else
+            {
+                counter++;
+            }
+            
             var returnData = skillData.ToArray();
             mutex.ReleaseMutex();
             return Ok(new { Players = newRatings.Keys});

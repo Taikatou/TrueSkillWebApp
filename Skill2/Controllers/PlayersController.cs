@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Moserware.Skills;
-using SkillsWebApp.Data;
 
 namespace SkillsWebApp.Controllers
 {
@@ -11,6 +7,7 @@ namespace SkillsWebApp.Controllers
     [ApiController]
     public class PlayersController : ControllerBase
     {
+        public static Dictionary<string, List<Player>> CharacterData = new Dictionary<string, List<Player>>();
         public static List<Player> Players = new List<Player>();
         public PlayersController()
         {
@@ -156,11 +153,35 @@ namespace SkillsWebApp.Controllers
         {
             if(!PlayerExistsPlayfab(PlayfabId))
             {
+                Player previousPlayer = null;
+                var characterName = PlayfabId.Split("?")[0];
+                for (var i = Players.Count-1; i >= 0 && previousPlayer == null; i--)
+                {
+                    var playerNameSplit = Players[i].PlayfabId.Split("?");
+                    var name = playerNameSplit[0];
+                    var team = playerNameSplit[1].Split('=')[1];
+                    if(name == characterName && team != "0")
+                    {
+                        previousPlayer = Players[i];
+                    }
+                }
+
+                var rating = GameInfo.DefaultGameInfo.DefaultRating;
+                if (previousPlayer != null)
+                {
+                    rating = new Rating(previousPlayer.Rating.Mean, previousPlayer.Rating.StandardDeviation);
+                }
                 var player = new Player
                 {
                     PlayfabId = PlayfabId,
-                    Rating = GameInfo.DefaultGameInfo.DefaultRating
+                    Rating = rating
                 };
+                if(!CharacterData.ContainsKey(characterName))
+                {
+                    CharacterData.Add(characterName, new List<Player>());
+                }
+                CharacterData[characterName].Add(player);
+                
                 Players.Add(player);
                 return player;
             }
